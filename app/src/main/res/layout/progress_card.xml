@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="103dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="35dp"
+    app:cardElevation="4dp"
+    android:layout_marginHorizontal="30dp"
+    >
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+      <TextView
+          android:id="@+id/tv_title_progress"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/personal_work"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"
+          android:layout_marginTop="16dp"
+          android:layout_marginLeft="12dp"
+          android:textColor="#828282"
+          />
+
+      <TextView
+          android:id="@+id/tv_progress_desc"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Create Adds"
+          app:layout_constraintTop_toBottomOf="@id/tv_title_progress"
+          app:layout_constraintLeft_toLeftOf="@id/tv_title_progress"
+          android:layout_marginTop="5dp"
+          android:textColor="@color/black"
+          android:textSize="20sp"
+          android:fontFamily="@font/poppinssemibold"/>
+
+
+      <TextView
+          android:id="@+id/tv_progress_hours"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="#828282"
+          app:layout_constraintTop_toBottomOf="@id/tv_progress_desc"
+          app:layout_constraintLeft_toLeftOf="@id/tv_title_progress"
+          android:text="@string/_2_hours_ago"
+          android:fontFamily="@font/poppinsregular"
+          />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

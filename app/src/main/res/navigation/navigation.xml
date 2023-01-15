@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="uz.sardor.meningkundaligim.presenter.sreens.mainscreen.MainFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_homeFragment_to_allProjectFragment"
+            app:destination="@id/allProjectFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_editFragement"
+            app:destination="@id/editFragement" />
+    </fragment>
+    <fragment
+        android:id="@+id/editFragement"
+        android:name="uz.sardor.meningkundaligim.presenter.sreens.editScreen.EditFragement"
+        android:label="fragment_edit_fragement"
+        tools:layout="@layout/fragment_edit_fragement" />
+    <fragment
+        android:id="@+id/allProjectFragment"
+        android:name="uz.sardor.meningkundaligim.presenter.sreens.screenProject.AllProjectFragment"
+        android:label="fragment_all_project"
+        tools:layout="@layout/fragment_all_project" >
+        <action
+            android:id="@+id/action_allProjectFragment_to_editFragement"
+            app:destination="@id/editFragement" />
+        <action
+            android:id="@+id/action_allProjectFragment_to_extraDataFragment"
+            app:destination="@id/extraDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/extraDataFragment"
+        android:name="uz.sardor.meningkundaligim.presenter.sreens.extraData.ExtraDataFragment"
+        android:label="fragment_extra_data"
+        tools:layout="@layout/fragment_extra_data" />
+</navigation>
