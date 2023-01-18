@@ -1,7 +1,5 @@
 package uz.sardor.meningkundaligim.presenter.sreens.extraData
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,15 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import uz.sardor.meningkundaligim.R
+import androidx.recyclerview.widget.RecyclerView
+import uz.sardor.meningkundaligim.data.db.NoteDataBase
 import uz.sardor.meningkundaligim.databinding.DialogCustoBinding
 import uz.sardor.meningkundaligim.databinding.ExtradataCardBinding
 import uz.sardor.meningkundaligim.databinding.FragmentExtraDataBinding
+import uz.sardor.meningkundaligim.domain.model.ExtraDataEnity
+import uz.sardor.meningkundaligim.domain.repository.ExtraDataDao
 import uz.sardor.meningkundaligim.presenter.sreens.extraData.adapter.ExtraDataAdapter
+import uz.sardor.meningkundaligim.presenter.sreens.extraData.adapter.TodoListener
 
 
 class ExtraDataFragment : Fragment() {
@@ -27,10 +29,10 @@ class ExtraDataFragment : Fragment() {
     private val binding2 by lazy { ExtradataCardBinding.inflate(layoutInflater) }
     private val viewModel by viewModels<ExtraDataViewModel>()
     private val extraDataAdapter = ExtraDataAdapter()
-    private lateinit var sharedPreferences: SharedPreferences
-    private var id: Int? = null
-    private var isCheked: Boolean? = null
-
+    private var chanePos: Int? = null
+    private var list = ArrayList<ExtraDataEnity>()
+    private val extraDao: ExtraDataDao = NoteDataBase.getInstance().getExtraDao()
+    var id: Int? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,6 +47,15 @@ class ExtraDataFragment : Fragment() {
         }
 
 
+        itemTouch()
+
+        extraDataAdapter.setListener(object : TodoListener {
+            override fun checkBoxCliked(extraDataEnity: ExtraDataEnity, isCheked: Boolean) {
+                extraDataEnity.isCheked = isCheked
+                extraDao.update(extraDataEnity)
+            }
+        })
+
         return binding.root
     }
 
@@ -52,7 +63,9 @@ class ExtraDataFragment : Fragment() {
         id = arguments?.getInt("key")
         val title = arguments?.getString("keytitle")
         binding.edTitleGetDate.setText(title)
+        Log.d("PPP", id.toString())
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -73,12 +86,15 @@ class ExtraDataFragment : Fragment() {
 
     private fun getAllDataFromDb(id: Int) {
         viewModel.getDateAll(id).observe(viewLifecycleOwner) {
-            extraDataAdapter.submitList(it)
-            Log.d("rvdata", it.toString())
+            list =
+                it as ArrayList<ExtraDataEnity> /* = java.util.ArrayList<uz.sardor.meningkundaligim.domain.model.ExtraDataEnity> */
+
+
+            extraDataAdapter.submitList(list)
+            Log.d("rvdata", list.toString())
             binding.recyclerItem.adapter = extraDataAdapter
             binding.recyclerItem.layoutManager = LinearLayoutManager(requireContext())
         }
-
     }
 
     private fun setDialog() {
@@ -89,10 +105,7 @@ class ExtraDataFragment : Fragment() {
         dialog.create()
         view.btnSave.setOnClickListener {
             id?.let { it ->
-                viewModel.saveData(
-                    view.edName.text.toString(),
-                    key = it,
-                )
+                viewModel.saveData(view.edName.text.toString(), key = it)
             }
             if (id != null) {
                 getAllDataFromDb(id!!)
@@ -102,6 +115,25 @@ class ExtraDataFragment : Fragment() {
     }
 
 
+    private fun itemTouch() {
+        ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                if (direction == ItemTouchHelper.RIGHT) {
+                    viewModel.deleteId(list[viewHolder.adapterPosition].id)
+                }
+                extraDataAdapter.notifyDataSetChanged()
+            }
+        }).attachToRecyclerView(binding.recyclerItem)
+    }
 
 
     override fun onPause() {
@@ -110,12 +142,11 @@ class ExtraDataFragment : Fragment() {
     }
 
 
-
-
-
     override fun onResume() {
         super.onResume()
-
+        chanePos?.apply {
+            extraDataAdapter.notifyItemChanged(this)
+        }
     }
 
 }

@@ -38,5 +38,14 @@
         android:id="@+id/extraDataFragment"
         android:name="uz.sardor.meningkundaligim.presenter.sreens.extraData.ExtraDataFragment"
         android:label="fragment_extra_data"
-        tools:layout="@layout/fragment_extra_data" />
+        tools:layout="@layout/fragment_extra_data" >
+        <action
+            android:id="@+id/action_extraDataFragment_to_toDoFragment"
+            app:destination="@id/toDoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/toDoFragment"
+        android:name="uz.sardor.meningkundaligim.presenter.sreens.extraData.fragments.ToDoFragment"
+        android:label="fragment_to_do"
+        tools:layout="@layout/fragment_to_do" />
 </navigation>

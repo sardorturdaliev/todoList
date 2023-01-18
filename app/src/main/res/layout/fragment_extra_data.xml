@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presenter.sreens.extraData.ExtraDataFragment">
 
-
     <ImageView
         android:id="@+id/letter_img"
         android:layout_width="20dp"
@@ -31,6 +30,41 @@
         app:layout_constraintLeft_toRightOf="@id/letter_img"
         android:layout_marginStart="10dp"
         />
+
+    <LinearLayout
+        android:id="@+id/linear_progress2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_project_progress"
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        app:layout_constraintTop_toTopOf="@id/today_date"
+        app:layout_constraintBottom_toBottomOf="@id/today_date"
+        android:layout_marginRight="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="In Progress"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:fontFamily="@font/poppinsregular"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="17"
+            android:padding="5dp"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/poppinsregular"
+            />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/ed_title_getDate"
@@ -83,6 +117,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="20dp"
         />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

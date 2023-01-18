@@ -9,7 +9,7 @@ import uz.sardor.meningkundaligim.domain.repository.NoteDao
 import uz.sardor.meningkundaligim.domain.model.NoteEntity
 import uz.sardor.meningkundaligim.domain.repository.ExtraDataDao
 
-@Database(entities = [NoteEntity::class,ExtraDataEnity::class], version = 2)
+@Database(entities = [NoteEntity::class,ExtraDataEnity::class], version = 3)
 abstract class NoteDataBase : RoomDatabase() {
     abstract fun getNoteDao(): NoteDao
     abstract  fun getExtraDao() : ExtraDataDao

@@ -11,18 +11,21 @@ import uz.sardor.meningkundaligim.domain.model.ExtraDataEnity
 import uz.sardor.meningkundaligim.domain.model.NoteEntity
 
 class ExtraDataAdapter : ListAdapter<ExtraDataEnity, ExtraDataAdapter.Holder>(Diff) {
-    private var click: (() -> Unit)? = null
-
+    private var click: ((ExtraDataEnity) -> Unit)? = null
+    private var listener: TodoListener? = null
 
     inner class Holder(val binding: ExtradataCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onbind(entity: ExtraDataEnity) = with(binding) {
             val pos = getItem(adapterPosition)
             tvExtraData.text = entity.extradata
+            checkbox.isChecked = entity.isCheked
+            tvExtraData.paint.isStrikeThruText = entity.isCheked
 
-
-
-
-
+            checkbox.setOnCheckedChangeListener { check, isCheked ->
+                if (check.isPressed) {
+                    listener?.checkBoxCliked(getItem(adapterPosition), isCheked)
+                }
+            }
 
 
 
@@ -45,15 +48,20 @@ class ExtraDataAdapter : ListAdapter<ExtraDataEnity, ExtraDataAdapter.Holder>(Di
         ExtradataCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
+
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.onbind(getItem(position))
     }
 
 
-    fun setChekBox(block: () -> Unit) {
+    fun setChekBox(block: (ExtraDataEnity) -> Unit) {
         click = block
     }
 
+
+    fun setListener(listener: TodoListener) {
+        this.listener = listener
+    }
 
 
 }

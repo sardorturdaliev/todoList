@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+   <item
+       android:id="@+id/menu_Todo"
+       android:title="To do"/>
+   <item
+       android:id="@+id/menu_progress"
+       android:title="Progress"/>
+</menu>

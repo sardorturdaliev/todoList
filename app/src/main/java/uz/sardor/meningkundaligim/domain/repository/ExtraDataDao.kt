@@ -20,6 +20,9 @@ interface ExtraDataDao {
     fun getExtraData(extradataKey : Int) : LiveData<List<ExtraDataEnity>>
 
 
+    @Query("DELETE FROM  'table_extradata' where `id` = :id")
+    fun deleteItem(id : Int)
+
 
 
 

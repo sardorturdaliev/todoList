@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import uz.sardor.meningkundaligim.R
 import uz.sardor.meningkundaligim.databinding.CardItemsBinding
 import uz.sardor.meningkundaligim.databinding.FragmentAllProjectBinding
-import uz.sardor.meningkundaligim.presenter.sreens.extraData.ExtraDataFragment
 import uz.sardor.meningkundaligim.presenter.sreens.screenProject.adapter.AllProjectAdapter
 
 class AllProjectFragment : Fragment() {
@@ -36,10 +35,10 @@ class AllProjectFragment : Fragment() {
 
 
             allProjectAdapter.setOnClickExtraDataListener { item ->
-                val fm = ExtraDataFragment()
+                val bundl2 = Bundle()
                 val bundle = bundleOf("key" to item,"keytitle" to it[item-1].title)
                 Log.d("idfind", bundle.toString())
-
+                bundl2.putInt("key2",item)
 
              findNavController().navigate(R.id.extraDataFragment,bundle)
 
